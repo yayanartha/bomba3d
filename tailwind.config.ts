@@ -15,7 +15,7 @@ const config: Config = {
 			},
 		},
 		fontFamily: {
-			sans: ["Gilroy-ExtraBold", "sans-serif"],
+			sans: ["var(--font-roboto)"],
 		},
 	},
 	plugins: [],

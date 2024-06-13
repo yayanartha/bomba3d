@@ -22,7 +22,7 @@ type GLTFResult = GLTF & {
 	animations: GLTFAction[];
 };
 
-type ActionName =
+export type MarineAnimation =
 	| "Death"
 	| "Duck"
 	| "HitReact"
@@ -38,12 +38,12 @@ type ActionName =
 	| "Wave"
 	| "Yes";
 interface GLTFAction extends THREE.AnimationClip {
-	name: ActionName;
+	name: MarineAnimation;
 }
 
 type Props = {
 	color?: string;
-	animation: ActionName;
+	animation: MarineAnimation;
 } & JSX.IntrinsicElements["group"];
 
 export const CharacterCaptain = ({

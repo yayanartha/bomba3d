@@ -21,7 +21,7 @@ type GLTFResult = GLTF & {
 	animations: GLTFAction[];
 };
 
-type ActionName =
+export type PirateAnimation =
 	| "Death"
 	| "Duck"
 	| "HitReact"
@@ -38,12 +38,12 @@ type ActionName =
 	| "Wave"
 	| "Yes";
 interface GLTFAction extends THREE.AnimationClip {
-	name: ActionName;
+	name: PirateAnimation;
 }
 
 type Props = {
 	color?: string;
-	animation: ActionName;
+	animation: PirateAnimation;
 } & JSX.IntrinsicElements["group"];
 
 export const CharacterSkeleton = ({
@@ -64,9 +64,8 @@ export const CharacterSkeleton = ({
 
 	useEffect(() => {
 		actions[animation]?.reset().fadeIn(0.2).play();
-
 		return () => {
-			actions.Idle?.fadeOut(0.2);
+			actions[animation]?.fadeOut(0.2);
 		};
 	}, [actions, animation]);
 
