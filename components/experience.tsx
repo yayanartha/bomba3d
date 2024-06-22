@@ -1,41 +1,31 @@
-import { CameraControls, Environment, OrbitControls } from "@react-three/drei";
-import { useRef } from "react";
-import { Board } from "./board";
-import { RigidBody } from "@react-three/rapier";
-import { ShipLargeController } from "./ship-large-controller";
-import { ShipSmallController } from "./ship-small-controller";
-import { MissileController } from "./missile-controller";
-import { MineController } from "./mine-controller";
+"use client";
 import { GameState, useGameEngine } from "@/hooks/use-game-engine";
-import { myPlayer } from "playroomkit";
+import { Environment } from "@react-three/drei";
+import dynamic from "next/dynamic";
+
+const Lobby = dynamic(() => import("./lobby"), { ssr: false });
+const Podium = dynamic(() => import("./podium"), { ssr: false });
+const Game = dynamic(() => import("./game"), { ssr: false });
 
 export const Experience = () => {
-	const { mines, missiles } = useGameEngine();
+	const { gameState } = useGameEngine();
 
 	return (
 		<>
-			<OrbitControls />
+			{gameState === GameState.Lobby && <Lobby />}
+			{gameState === GameState.Winner && <Podium />}
+			{gameState === GameState.Game && <Game />}
+
+			<directionalLight intensity={0.5} position={[5, 15, -5]} castShadow />
 			<Environment preset="sunset" />
-
-			{mines.map((mine) => (
-				<MineController position-x={5} key={mine} />
-			))}
-
-			{missiles.map((missile) => (
-				<MissileController position-x={10} key={missile} />
-			))}
-
-			<ShipSmallController position-z={-5} />
-
-			<ShipLargeController position-z={10} />
-
-			<Board />
+			<fog
+				attach="fog"
+				args={[
+					"#FDF4C3",
+					gameState === GameState.Game ? 20 : 10,
+					gameState === GameState.Game ? 80 : 40,
+				]}
+			/>
 		</>
 	);
-};
-
-const CameraManager = () => {
-	const cameraRef = useRef<CameraControls>(null);
-
-	return <CameraControls ref={cameraRef} />;
 };

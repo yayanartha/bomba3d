@@ -1,13 +1,36 @@
 import { GameState, useGameEngine } from "@/hooks/use-game-engine";
 import { useRef } from "react";
 import { Timer } from "./timer";
+import { myPlayer } from "playroomkit";
+import { StatusBar } from "./status-bar";
 
 export const UI = () => {
+	const me = myPlayer();
 	const { gameState, players, timer } = useGameEngine();
 	const atbBarRef = useRef<HTMLDivElement>(null);
 
 	if (gameState === GameState.Lobby) {
-		return null;
+		return (
+			<main className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col gap-4 items-stretch justify-between pointer-events-none">
+				<div className="flex flex-col flex-1 items-center p-8 gap-2">
+					<div className="text-center text-6xl text-stone-800 tracking-tighter font-sans">
+						The Pirate
+					</div>
+
+					<div className="flex flex-col gap-2 w-full self-center bg-white/50 rounded-2xl p-5 border-2 border-white">
+						<StatusBar icon="❤️" value={100} maxValue={100} />
+						<StatusBar icon="🔋" value={120} maxValue={120} />
+						<StatusBar icon="💣" value={30} maxValue={100} />
+					</div>
+				</div>
+
+				<div className="flex-1 flex flex-col items-center justify-end p-8">
+					<button className="w-full bg-red-700 rounded-2xl border-4 border-slate-800 h-16 text-2xl">
+						START GAME
+					</button>
+				</div>
+			</main>
+		);
 	}
 
 	if (gameState === GameState.Game) {

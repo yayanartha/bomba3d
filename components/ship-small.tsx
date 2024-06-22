@@ -4,8 +4,7 @@ Command: npx gltfjsx@6.2.18 public/models/Ship_Small.gltf --types
 */
 
 import type * as THREE from "three";
-import { useRef } from "react";
-import { Billboard, Text, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import type { GLTF } from "three-stdlib";
 import { degToRad } from "three/src/math/MathUtils.js";
 
@@ -21,21 +20,9 @@ type GLTFResult = GLTF & {
 
 export const ShipSmall = (props: JSX.IntrinsicElements["group"]) => {
 	const { nodes, materials } = useGLTF("models/Ship_Small.gltf") as GLTFResult;
-	const group = useRef<THREE.Group<THREE.Object3DEventMap>>(null);
 
 	return (
-		<group {...props} dispose={null} ref={group}>
-			<Billboard position={[-0.5, 4, -2]}>
-				<Text
-					fontSize={0.42}
-					font="fonts/Gilroy-ExtraBold.ttf"
-					textAlign="center"
-				>
-					Pirate
-					<meshStandardMaterial color="red" />
-				</Text>
-			</Billboard>
-
+		<group {...props} dispose={null}>
 			<mesh
 				castShadow
 				receiveShadow

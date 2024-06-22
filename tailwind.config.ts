@@ -15,7 +15,7 @@ const config: Config = {
 			},
 		},
 		fontFamily: {
-			sans: ["var(--font-roboto)"],
+			sans: ["var(--font-gilroy)"],
 		},
 	},
 	plugins: [],

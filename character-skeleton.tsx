@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.2.18 public/models/Characters_Skeleton.gltf --types
 
 import * as THREE from "three";
 import React, { useEffect, useMemo, useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, Outlines } from "@react-three/drei";
 import type { GLTF } from "three-stdlib";
 import { degToRad } from "three/src/math/MathUtils.js";
 
@@ -81,7 +81,9 @@ export const CharacterSkeleton = ({
 						skeleton={nodes.Skeleton.skeleton}
 						castShadow
 						receiveShadow
-					/>
+					>
+						<Outlines thickness={0.02} color="black" />
+					</skinnedMesh>
 				</group>
 			</group>
 		</group>

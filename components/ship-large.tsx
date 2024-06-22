@@ -4,10 +4,11 @@ Command: npx gltfjsx@6.2.18 public/models/Ship_Large.gltf --types
 */
 
 import type * as THREE from "three";
-import { useRef } from "react";
 import { Billboard, Text, useGLTF } from "@react-three/drei";
 import type { GLTF } from "three-stdlib";
 import { degToRad } from "three/src/math/MathUtils.js";
+import { useGameEngine } from "@/hooks/use-game-engine";
+import { isHost } from "playroomkit";
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -21,17 +22,17 @@ type GLTFResult = GLTF & {
 
 export const ShipLarge = (props: JSX.IntrinsicElements["group"]) => {
 	const { nodes, materials } = useGLTF("models/Ship_Large.gltf") as GLTFResult;
-	const group = useRef<THREE.Group<THREE.Object3DEventMap>>(null);
+	const { marinePlayer } = useGameEngine();
 
 	return (
-		<group {...props} dispose={null} ref={group}>
-			<Billboard position={[-0.5, 4, 6]}>
+		<group {...props} dispose={null}>
+			<Billboard position={[0, 10, 6]}>
 				<Text
 					fontSize={0.42}
 					font="fonts/Gilroy-ExtraBold.ttf"
 					textAlign="center"
 				>
-					Marine
+					{marinePlayer?.state.getProfile().name}
 					<meshStandardMaterial color="red" />
 				</Text>
 			</Billboard>

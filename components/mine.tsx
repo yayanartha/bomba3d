@@ -33,43 +33,36 @@ export const Mine = (props: JSX.IntrinsicElements["group"]) => {
 	return (
 		<group {...props} dispose={null} ref={mineRef}>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group450465863.geometry}
 				material={materials.mat17}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group413415826.geometry}
 				material={materials.mat8}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group1270301541.geometry}
 				material={materials.mat8}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group874016818.geometry}
 				material={materials.mat8}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group611164287.geometry}
 				material={materials.mat8}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group865683717.geometry}
 				material={materials.mat8}
 			/>
 			<mesh
-				castShadow
 				receiveShadow
 				geometry={nodes.group715062615.geometry}
 				material={materials.mat8}

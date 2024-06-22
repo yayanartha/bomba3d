@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const roboto = Roboto({
-	subsets: ["latin"],
-	display: "swap",
-	weight: ["400", "700"],
-	variable: "--font-roboto",
+const gilroy = localFont({
+	src: "../public/fonts/Gilroy-ExtraBold.ttf",
+	variable: "--font-gilroy",
 });
 
 export const metadata: Metadata = {
@@ -20,8 +18,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={roboto.variable}>
-			<body className={roboto.className}>{children}</body>
+		<html lang="en" className={`${gilroy.variable} font-sans`}>
+			<body className={gilroy.className}>{children}</body>
 		</html>
 	);
 }
