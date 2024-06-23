@@ -17,7 +17,7 @@ export const Experience = () => {
 			{gameState === GameState.Game && <Game />}
 
 			<directionalLight intensity={0.5} position={[5, 15, -5]} castShadow />
-			<Environment preset="sunset" />
+			<Environment preset="warehouse" />
 			<fog
 				attach="fog"
 				args={[

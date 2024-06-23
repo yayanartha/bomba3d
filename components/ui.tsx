@@ -11,6 +11,7 @@ import { Timer } from "./timer";
 import { myPlayer, usePlayersList } from "playroomkit";
 import { StatusBar } from "./status-bar";
 import { Arrow } from "./arrow";
+import { motion } from "framer-motion";
 
 export const UI = () => {
 	usePlayersList(true);
@@ -41,31 +42,36 @@ export const UI = () => {
 							{role === Role.Pirate ? "The Runner" : "The Chaser"}
 						</div>
 						<div className="-mt-2">
-							<div className="text-center text-4xl text-red-700 tracking-tighter font-sans">
+							<div className="text-4xl text-red-700 tracking-tighter font-sans">
 								{role === Role.Pirate ? "Pirate" : "Marine"}
 							</div>
 						</div>
 					</div>
 
 					<div className="flex flex-row w-full max-w-[360px] items-center justify-between">
-						<div
-							className="flex flex-col w-12 h-12 items-center justify-center scale-150"
+						<motion.button
+							className="flex flex-col w-12 h-12 items-center justify-center"
 							onClick={changeRole}
+							whileTap={{ scale: 0.8 }}
 						>
 							<div className="absolute animate-ping opacity-50">
 								<Arrow />
 							</div>
 							<Arrow stroke />
-						</div>
-						<button
-							className="flex flex-col w-12 h-12 items-center justify-center scale-150 rotate-180"
+						</motion.button>
+
+						<motion.button
+							className="flex flex-col w-12 h-12 items-center justify-center"
 							onClick={changeRole}
+							whileTap={{ scale: 0.8 }}
 						>
-							<div className="absolute animate-ping opacity-50">
-								<Arrow />
+							<div className="rotate-180">
+								<div className="absolute animate-ping opacity-50">
+									<Arrow />
+								</div>
+								<Arrow stroke />
 							</div>
-							<Arrow stroke />
-						</button>
+						</motion.button>
 					</div>
 				</div>
 
@@ -93,12 +99,13 @@ export const UI = () => {
 						/>
 					</div>
 
-					<button
-						className="w-full max-w-[360px] bg-red-700 rounded-2xl border-4 border-slate-800 h-16 text-2xl"
+					<motion.button
+						className="w-full max-w-[360px] bg-red-700 rounded-2xl border-4 border-slate-800 h-14 text-2xl"
 						onClick={() => console.log("PLAY")}
+						whileTap={{ scale: 0.8 }}
 					>
 						PLAY
-					</button>
+					</motion.button>
 				</div>
 			</main>
 		);

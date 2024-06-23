@@ -8,6 +8,7 @@ import { Suspense, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { UI } from "@/components/ui";
 import { Perf } from "r3f-perf";
+import { Loader } from "@react-three/drei";
 
 const GameEngineProvider = dynamic(() => import("../hooks/use-game-engine"), {
 	ssr: false,
@@ -47,12 +48,14 @@ export default function Home() {
 
 	return (
 		<main className="w-screen h-screen">
+			<Loader />
+
 			<GameEngineProvider>
 				<KeyboardControls map={controlMap}>
 					<Canvas
 						shadows
 						camera={{ position: [0, 20, 40], fov: 42 }}
-						style={{ touchAction: "" }}
+						style={{ touchAction: "none" }}
 					>
 						<color attach="background" args={["#FDF4C3"]} />
 						{DEBUG && <Perf />}
@@ -67,8 +70,6 @@ export default function Home() {
 
 				<UI />
 			</GameEngineProvider>
-
-			{/* <Loader /> */}
 		</main>
 	);
 }
