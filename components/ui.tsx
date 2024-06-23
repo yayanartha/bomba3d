@@ -1,5 +1,6 @@
 import {
 	GameState,
+	GlobalState,
 	PlayerState,
 	Role,
 	playerBaseStats,
@@ -8,15 +9,25 @@ import {
 } from "@/hooks/use-game-engine";
 import { useRef, useState } from "react";
 import { Timer } from "./timer";
-import { myPlayer, usePlayersList } from "playroomkit";
+import {
+	isHost,
+	myPlayer,
+	useMultiplayerState,
+	usePlayersList,
+} from "playroomkit";
 import { StatusBar } from "./status-bar";
 import { Arrow } from "./arrow";
 import { motion } from "framer-motion";
+import { CountdownTimer } from "./countdown-timer";
 
 export const UI = () => {
 	usePlayersList(true);
 	const me = myPlayer();
-	const { gameState, players, timer } = useGameEngine();
+	// const { players, timer } = useGameEngine();
+	const [gameState, setGameState] = useMultiplayerState(
+		GlobalState.GameState,
+		GameState.Lobby,
+	);
 	const atbBarRef = useRef<HTMLDivElement>(null);
 
 	const [role, setRole] = useState<"pirate" | "marine">(
@@ -33,9 +44,16 @@ export const UI = () => {
 		});
 	};
 
+	const startGame = () => {
+		setGameState(GameState.CountDown);
+		setTimeout(() => {
+			setGameState(GameState.Game);
+		}, 4000);
+	};
+
 	if (gameState === GameState.Lobby) {
 		return (
-			<main className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col">
+			<div className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col">
 				<div className="flex flex-col flex-1 items-center justify-between p-8 gap-4">
 					<div>
 						<div className="text-center text-6xl text-stone-800 tracking-tighter font-sans">
@@ -76,7 +94,10 @@ export const UI = () => {
 				</div>
 
 				<div className="flex-1 flex flex-col items-center justify-end p-8 gap-4">
-					<div className="flex flex-col w-full max-w-[360px] self-center bg-white/70 rounded-2xl p-4 border-2 border-white">
+					<motion.div
+						layout
+						className="flex flex-col w-full max-w-[360px] self-center bg-white/70 rounded-2xl p-4 border-2 border-white"
+					>
 						<StatusBar
 							icon="❤️"
 							value={playerBaseStats[role].hp}
@@ -97,64 +118,69 @@ export const UI = () => {
 							value={playerBaseStats[role].speed}
 							maxValue={playerStats.maxSpeed}
 						/>
-					</div>
+					</motion.div>
 
-					<motion.button
-						className="w-full max-w-[360px] bg-red-700 rounded-2xl border-4 border-slate-800 h-14 text-2xl"
-						onClick={() => console.log("PLAY")}
-						whileTap={{ scale: 0.8 }}
-					>
-						PLAY
-					</motion.button>
+					{isHost() && (
+						<motion.button
+							layout
+							animate={{ y: 0, opacity: 1 }}
+							initial={{ y: 100, opacity: 0 }}
+							className="w-full max-w-[360px] bg-red-700 rounded-2xl border-4 border-slate-800 h-14 text-2xl"
+							onClick={startGame}
+							whileTap={{ scale: 0.8 }}
+						>
+							PLAY
+						</motion.button>
+					)}
 				</div>
-			</main>
-		);
-	}
-
-	if (gameState === GameState.Game) {
-		return (
-			<main className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col gap-4 items-stretch justify-between pointer-events-none">
-				{/* <div
-				ref={atbBarRef}
-				className="h-12 rounded-2xl bg-slate-600 border-slate-300 border-2 m-6"
-			></div> */}
-
-				<div className="flex-row items-center gap-4">
-					<div className="flex-1">
-						{players.length > 0 && (
-							<div className="bg-white rounded-2xl p-4">
-								<div className="flex-row items-center gap-4">
-									{/* <img
-									src={players[0].state.getProfile().photo}
-									alt="p1-avatar"
-								/> */}
-									<div className="flex-1">
-										<h3>{players[0].state.getProfile().name}</h3>
-									</div>
-								</div>
-							</div>
-						)}
-					</div>
-
-					<Timer />
-
-					<div className="flex-1"></div>
-				</div>
-			</main>
+			</div>
 		);
 	}
 
 	if (gameState === GameState.CountDown) {
 		return (
-			<div className="flex-1 items-center justify-center bg-slate-800/60">
-				<h1 className="text-white">{timer}</h1>
+			<div className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col items-center justify-center">
+				<CountdownTimer />
 			</div>
 		);
 	}
 
-	if (gameState === GameState.Winner) {
-		return null;
-	}
+	// if (gameState === GameState.Game) {
+	// 	return (
+	// 		<main className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col gap-4 items-stretch justify-between pointer-events-none">
+	// 			{/* <div
+	// 			ref={atbBarRef}
+	// 			className="h-12 rounded-2xl bg-slate-600 border-slate-300 border-2 m-6"
+	// 		></div> */}
+
+	// 			<div className="flex-row items-center gap-4">
+	// 				<div className="flex-1">
+	// 					{players.length > 0 && (
+	// 						<div className="bg-white rounded-2xl p-4">
+	// 							<div className="flex-row items-center gap-4">
+	// 								{/* <img
+	// 								src={players[0].state.getProfile().photo}
+	// 								alt="p1-avatar"
+	// 							/> */}
+	// 								<div className="flex-1">
+	// 									<h3>{players[0].state.getProfile().name}</h3>
+	// 								</div>
+	// 							</div>
+	// 						</div>
+	// 					)}
+	// 				</div>
+
+	// 				<Timer />
+
+	// 				<div className="flex-1"></div>
+	// 			</div>
+	// 		</main>
+	// 	);
+	// }
+
+	// if (gameState === GameState.Winner) {
+	// 	return null;
+	// }
 
 	return null;
 };
