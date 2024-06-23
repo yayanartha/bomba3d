@@ -1,16 +1,18 @@
 "use client";
 import { Experience } from "@/components/experience";
-import { UI } from "@/components/ui";
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { insertCoin } from "playroomkit";
 import { Suspense, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
+import { UI } from "@/components/ui";
+import { Perf } from "r3f-perf";
 
 const GameEngineProvider = dynamic(() => import("../hooks/use-game-engine"), {
 	ssr: false,
 });
+const DEBUG = false;
 
 export const Controls = {
 	left: "left",
@@ -50,9 +52,10 @@ export default function Home() {
 					<Canvas
 						shadows
 						camera={{ position: [0, 20, 40], fov: 42 }}
-						style={{ touchAction: "none" }}
+						style={{ touchAction: "" }}
 					>
 						<color attach="background" args={["#FDF4C3"]} />
+						{DEBUG && <Perf />}
 
 						<Suspense>
 							<Physics>
@@ -60,9 +63,9 @@ export default function Home() {
 							</Physics>
 						</Suspense>
 					</Canvas>
-
-					<UI />
 				</KeyboardControls>
+
+				<UI />
 			</GameEngineProvider>
 
 			{/* <Loader /> */}

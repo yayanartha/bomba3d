@@ -1,3 +1,4 @@
+import { ValueOf } from "next/dist/shared/lib/constants";
 import {
 	Joystick,
 	type PlayerState as PlayroomPlayerState,
@@ -24,13 +25,13 @@ type FirePosition = { id: string; position: THREE.Vector3 };
 
 interface GameEngineContext {
 	timer: number;
-	gameState: GameState;
+	gameState: ValueOf<typeof GameState>;
 	players: Player[];
 	piratePlayer?: Player;
 	marinePlayer?: Player;
 	mines: Mine[];
 	missiles: Missile[];
-	selectRole(playerId: string, role: Role): void;
+	selectRole(playerId: string, role: ValueOf<typeof Role>): void;
 	startGame(): void;
 	networkMines: Mine[];
 	networkMissiles: Missile[];
@@ -50,7 +51,7 @@ const GameEngineContext = createContext({} as GameEngineContext);
 
 export const Role = {
 	Pirate: "pirate",
-	Marine: "role",
+	Marine: "marine",
 };
 
 export const GameState = {
@@ -96,6 +97,30 @@ const DEFAULT_COUNTDOWN_TIME = 3;
 const DEFAULT_GAME_TIME = 180;
 const DEFAULT_HEALTH = 100;
 const DEFAULT_STAMINA = 100;
+
+export const playerStats = {
+	maxHp: 150,
+	maxStamina: 150,
+	maxPower: 150,
+	maxSpeed: 150,
+};
+
+export const playerBaseStats = {
+	pirate: {
+		hp: 100,
+		stamina: 120,
+		staminaRegenSpeed: 20,
+		power: 40,
+		speed: 80,
+	},
+	marine: {
+		hp: 150,
+		stamina: 100,
+		staminaRegenSpeed: 15,
+		power: 50,
+		speed: 50,
+	},
+};
 
 export default function GameEngineProvider({ children }: PropsWithChildren) {
 	// const [timer, setTimer] = useMultiplayerState(

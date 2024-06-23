@@ -4,8 +4,8 @@ Command: npx gltfjsx@6.2.18 public/models/Characters_Captain_Barbarossa.gltf --t
 */
 
 import * as THREE from "three";
-import { useEffect, useMemo, useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useEffect, useRef } from "react";
+import { useGLTF, useAnimations, Outlines } from "@react-three/drei";
 import type { GLTF } from "three-stdlib";
 import { degToRad } from "three/src/math/MathUtils.js";
 
@@ -64,11 +64,10 @@ export const CharacterCaptain = ({
 
 	useEffect(() => {
 		actions[animation]?.reset().fadeIn(0.2).play();
-
 		return () => {
-			actions.Idle?.fadeOut(0.2);
+			actions[animation]?.fadeOut(0.2);
 		};
-	}, [animation, actions]);
+	}, [actions, animation]);
 
 	return (
 		<group ref={group} {...props} dispose={null}>
@@ -82,7 +81,9 @@ export const CharacterCaptain = ({
 						skeleton={nodes.Captain_Barbarossa_.skeleton}
 						castShadow
 						receiveShadow
-					/>
+					>
+						<Outlines thickness={0.01} color="black" />
+					</skinnedMesh>
 					<skinnedMesh
 						name="Ernest"
 						geometry={nodes.Ernest.geometry}
@@ -90,7 +91,9 @@ export const CharacterCaptain = ({
 						skeleton={nodes.Ernest.skeleton}
 						castShadow
 						receiveShadow
-					/>
+					>
+						<Outlines thickness={0.02} color="black" />
+					</skinnedMesh>
 				</group>
 			</group>
 		</group>

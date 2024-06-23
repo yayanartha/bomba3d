@@ -3,6 +3,7 @@ import {
 	type PlayerState as PlayroomPlayerState,
 	myPlayer,
 	usePlayersList,
+	usePlayerState,
 } from "playroomkit";
 import { Board } from "./board";
 import { Ship, Ships } from "./ship";
@@ -11,10 +12,8 @@ import { PlayerState, Role } from "@/hooks/use-game-engine";
 import { Box, ContactShadows } from "@react-three/drei";
 
 export default function Lobby() {
-	const players = usePlayersList(true);
+	usePlayersList(true);
 	const me = myPlayer();
-
-	console.log("PLAYERS", players);
 
 	return (
 		<>
@@ -25,8 +24,8 @@ export default function Lobby() {
 }
 
 const RoleSwitcher = ({ player }: { player: PlayroomPlayerState }) => {
-	const [role, setRole] = useState<string>(player.getState(PlayerState.Role));
-	const model = Ships.find((ship) => ship.role === role);
+	const [role] = usePlayerState(player, PlayerState.Role, Role.Pirate);
+	const model = Ships[role === Role.Pirate ? 0 : 1];
 
 	return <Ship model={model} />;
 };
