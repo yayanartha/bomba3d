@@ -1,6 +1,7 @@
 "use client";
 import { Experience } from "@/components/experience";
 import { KeyboardControls } from "@react-three/drei";
+import { EffectComposer, DepthOfField } from "@react-three/postprocessing";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { insertCoin } from "playroomkit";
@@ -65,6 +66,15 @@ export default function Home() {
 								<Experience />
 							</Physics>
 						</Suspense>
+
+						<EffectComposer>
+							<DepthOfField
+								focusDistance={0.02}
+								focalLength={0.1}
+								bokehScale={2}
+								height={480}
+							/>
+						</EffectComposer>
 					</Canvas>
 				</KeyboardControls>
 

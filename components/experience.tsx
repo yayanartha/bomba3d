@@ -13,7 +13,7 @@ export const Experience = () => {
 	return (
 		<>
 			{gameState === GameState.Lobby && <Lobby />}
-			{gameState === GameState.Game && <Game />}
+			{[GameState.CountDown, GameState.Game].includes(gameState) && <Game />}
 			{gameState === GameState.Winner && <Podium />}
 
 			<directionalLight intensity={0.5} position={[5, 15, -5]} castShadow />

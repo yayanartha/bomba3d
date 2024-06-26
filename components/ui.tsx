@@ -5,10 +5,8 @@ import {
 	Role,
 	playerBaseStats,
 	playerStats,
-	useGameEngine,
 } from "@/hooks/use-game-engine";
-import { useRef, useState } from "react";
-import { Timer } from "./timer";
+import { useState } from "react";
 import {
 	isHost,
 	myPlayer,
@@ -23,12 +21,10 @@ import { CountdownTimer } from "./countdown-timer";
 export const UI = () => {
 	usePlayersList(true);
 	const me = myPlayer();
-	// const { players, timer } = useGameEngine();
 	const [gameState, setGameState] = useMultiplayerState(
 		GlobalState.GameState,
 		GameState.Lobby,
 	);
-	const atbBarRef = useRef<HTMLDivElement>(null);
 
 	const [role, setRole] = useState<"pirate" | "marine">(
 		me?.getState(PlayerState.Role) || Role.Pirate,
@@ -56,13 +52,14 @@ export const UI = () => {
 			<div className="fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col">
 				<div className="flex flex-col flex-1 items-center justify-between p-8 gap-4">
 					<div>
-						<div className="text-center text-6xl text-stone-800 tracking-tighter font-sans">
+						<div className="text-center text-6xl text-red-700 tracking-tighter font-sans">
 							{role === Role.Pirate ? "The Runner" : "The Chaser"}
 						</div>
-						<div className="-mt-2">
-							<div className="text-4xl text-red-700 tracking-tighter font-sans">
-								{role === Role.Pirate ? "Pirate" : "Marine"}
-							</div>
+
+						<div className="text-center bg-black/50 rounded-2xl px-4 py-2 border-2 border-black/10 text-white">
+							{role === Role.Pirate
+								? "Survive the attacks until the game ends!"
+								: "Sink the enemy ship before the time runs out!"}
 						</div>
 					</div>
 
@@ -125,7 +122,7 @@ export const UI = () => {
 							layout
 							animate={{ y: 0, opacity: 1 }}
 							initial={{ y: 100, opacity: 0 }}
-							className="w-full max-w-[360px] bg-red-700 rounded-2xl border-4 border-slate-800 h-14 text-2xl"
+							className="w-full max-w-[360px] bg-red-700 rounded-2xl border-2 border-red-800 h-12 text-2xl"
 							onClick={startGame}
 							whileTap={{ scale: 0.8 }}
 						>
