@@ -7,9 +7,7 @@ import {
 } from "playroomkit";
 import { Board } from "./board";
 import { Ship, Ships } from "./ship";
-import { useState } from "react";
 import { PlayerState, Role } from "@/hooks/use-game-engine";
-import { Box, ContactShadows } from "@react-three/drei";
 
 export default function Lobby() {
 	usePlayersList(true);

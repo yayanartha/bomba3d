@@ -83,15 +83,15 @@ export const ShipSmallController = ({ state, control, isPlayer }: Props) => {
 					true,
 				);
 			} else if (gameState === GameState.Game) {
-				const cameraDistanceY = window.innerWidth < 1024 ? 16 : 20;
-				const cameraDistanceZ = window.innerWidth < 1024 ? 30 : 34;
+				const cameraDistanceY = window.innerWidth < 1024 ? 8 : 20;
+				const cameraDistanceZ = window.innerWidth < 1024 ? 25 : 34;
 				const playerWorldPos = vec3(rb.current?.translation());
 				cameraControlRef.current.setLookAt(
 					playerWorldPos.x,
 					playerWorldPos.y + cameraDistanceY,
 					playerWorldPos.z + cameraDistanceZ,
 					playerWorldPos.x,
-					playerWorldPos.y,
+					playerWorldPos.y - 3,
 					playerWorldPos.z,
 					true,
 				);
@@ -286,8 +286,8 @@ export const ShipSmallController = ({ state, control, isPlayer }: Props) => {
 						</Billboard>
 					)}
 				</Float>
-				<mesh position={[0, 0.509, 3]} rotation-x={degToRad(-90)}>
-					<planeGeometry args={[3, 5, 10, 10]} />
+				<mesh position={[0, 0.78, 3]} rotation-x={degToRad(-90)}>
+					<planeGeometry args={[2.3, 5, 10, 10]} />
 					<MeshDistortMaterial speed={3} radius={1}>
 						<GradientTexture stops={[0, 1]} colors={["#FFF", "#70E6FD"]} />
 					</MeshDistortMaterial>

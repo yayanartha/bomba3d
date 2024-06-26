@@ -21,6 +21,7 @@ import {
 	PlayerState,
 	type WeaponUserData,
 	useGameEngine,
+	GameState,
 } from "@/hooks/use-game-engine";
 import { useFrame } from "@react-three/fiber";
 import { Controls } from "@/app/page";
@@ -59,18 +60,33 @@ export const ShipLargeController = ({ state, control, isPlayer }: Props) => {
 
 		// Camera follow
 		if (cameraControlRef.current) {
-			const cameraDistanceY = window.innerWidth < 1024 ? 16 : 20;
-			const cameraDistanceZ = window.innerWidth < 1024 ? 50 : 54;
-			const playerWorldPos = vec3(ship.current?.position);
-			cameraControlRef.current.setLookAt(
-				playerWorldPos.x,
-				playerWorldPos.y + cameraDistanceY,
-				playerWorldPos.z + cameraDistanceZ,
-				playerWorldPos.x,
-				playerWorldPos.y,
-				playerWorldPos.z,
-				true,
-			);
+			if (gameState === GameState.Lobby) {
+				const cameraDistanceY = window.innerWidth < 1024 ? 16 : 20;
+				const cameraDistanceZ = window.innerWidth < 1024 ? 50 : 54;
+				const playerWorldPos = vec3(ship.current?.position);
+				cameraControlRef.current.setLookAt(
+					playerWorldPos.x,
+					playerWorldPos.y + cameraDistanceY,
+					playerWorldPos.z + cameraDistanceZ,
+					playerWorldPos.x,
+					playerWorldPos.y,
+					playerWorldPos.z,
+					true,
+				);
+			} else if (gameState === GameState.Game) {
+				const cameraDistanceY = window.innerWidth < 1024 ? 20 : 24;
+				const cameraDistanceZ = window.innerWidth < 1024 ? 40 : 44;
+				const playerWorldPos = vec3(ship.current?.position);
+				cameraControlRef.current.setLookAt(
+					playerWorldPos.x,
+					playerWorldPos.y + cameraDistanceY,
+					playerWorldPos.z + cameraDistanceZ,
+					playerWorldPos.x,
+					playerWorldPos.y - 8,
+					playerWorldPos.z,
+					true,
+				);
+			}
 		}
 
 		if (state.getState(PlayerState.Dead)) {

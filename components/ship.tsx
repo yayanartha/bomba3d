@@ -12,7 +12,6 @@ import type { Vector3 } from "@react-three/fiber";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { CharacterSkeleton } from "@/character-skeleton";
 import { useEffect, useRef } from "react";
-import { Mine } from "./mine";
 import { CharacterCaptain } from "./character-captain";
 
 export const Ships = [
