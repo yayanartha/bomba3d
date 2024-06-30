@@ -5,7 +5,13 @@ Command: npx gltfjsx@6.2.18 public/models/Characters_Captain_Barbarossa.gltf --t
 
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
-import { useGLTF, useAnimations, Outlines } from "@react-three/drei";
+import {
+	useGLTF,
+	useAnimations,
+	Outlines,
+	Billboard,
+	Text,
+} from "@react-three/drei";
 import type { GLTF } from "three-stdlib";
 import { degToRad } from "three/src/math/MathUtils.js";
 
@@ -42,12 +48,12 @@ interface GLTFAction extends THREE.AnimationClip {
 }
 
 type Props = {
-	color?: string;
+	playerName?: string;
 	animation: MarineAnimation;
 } & JSX.IntrinsicElements["group"];
 
 export const CharacterCaptain = ({
-	color = "blue",
+	playerName,
 	animation = "Idle",
 	...props
 }: Props) => {
@@ -72,6 +78,19 @@ export const CharacterCaptain = ({
 	return (
 		<group ref={group} {...props} dispose={null}>
 			<group name="Scene" rotation-y={degToRad(180)}>
+				{typeof playerName !== "undefined" && (
+					<Billboard position={[0, 1.8, 0]}>
+						<Text
+							fontSize={0.2}
+							font="fonts/Gilroy-ExtraBold.ttf"
+							textAlign="center"
+						>
+							{playerName}
+							<meshStandardMaterial color="Fuchsia" />
+						</Text>
+					</Billboard>
+				)}
+
 				<group name="CharacterArmature">
 					<primitive object={nodes.Root} />
 					<skinnedMesh

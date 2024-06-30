@@ -21,7 +21,7 @@ export const Experience = () => {
 			<Environment preset="warehouse" />
 			<fog
 				attach="fog"
-				args={["#FDF4C3", isInGame ? 40 : 10, isInGame ? 100 : 40]}
+				args={["#FDF4C3", isInGame ? 40 : 15, isInGame ? 100 : 45]}
 			/>
 		</>
 	);

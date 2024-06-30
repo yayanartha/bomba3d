@@ -7,7 +7,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { ShipSmall } from "./ship-small";
-import { CharacterSkeleton, type PirateAnimation } from "@/character-skeleton";
 import {
 	Billboard,
 	CameraControls,
@@ -32,6 +31,7 @@ import {
 } from "@/hooks/use-game-engine";
 import { useFrame } from "@react-three/fiber";
 import { Controls } from "@/app/page";
+import { CharacterSkeleton, PirateAnimation } from "./character-skeleton";
 
 const MOVEMENT_SPEED = 4.2;
 const FIRE_RATE = 300;

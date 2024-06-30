@@ -108,7 +108,7 @@ export const playerStats = {
 export const playerBaseStats = {
 	pirate: {
 		hp: 100,
-		stamina: 120,
+		stamina: 150,
 		staminaRegenSpeed: 20,
 		power: 40,
 		speed: 80,
